@@ -1,0 +1,32 @@
+.login-container{
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    background-size: cover;
+    padding-top: 60px;
+    background-image: linear-gradient(to right bottom,rgb(170 202 255 / 80%),rgb(0 0 0 / 80%)),url('https://stg.sso.fafu.com.vn/auth/resources/vpytb/login/keycloak/img/background.jpg');
+  }
+  .logo{
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    background-size: cover;
+    background-position: top;
+    height: 32px;
+    width:40%;
+    background-image: url('https://stg.sso.fafu.com.vn/auth/resources/vpytb/login/keycloak/img/logo-vimc.png');
+  }
+  
+  .bk-login{
+    max-width: 350px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    border-radius: 4px;
+    background-color: #12273acb;
+    padding: 20px;
+    color: white;
+    box-sizing: border-box;
+  }
