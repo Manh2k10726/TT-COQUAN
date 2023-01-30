@@ -3,10 +3,10 @@ import { manageScheduleService } from "../../services/ManageScheduleService"
 
 
 
-export const ScheduleAction = ( ) => {
+export const ScheduleAction = (from_date,to_date ) => {
     return async dispatch => {
         try {
-            const res = await manageScheduleService.getSchedule();
+            const res = await manageScheduleService.getSchedule(from_date,to_date);
             console.log('data schedule:',res)
             if (res.status === 200) {
                 dispatch({

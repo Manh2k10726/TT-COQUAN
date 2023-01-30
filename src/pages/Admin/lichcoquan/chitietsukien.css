@@ -1,0 +1,27 @@
+.cs-container{
+    display:flex;
+    border-radius: 7px;
+    background-color: rgb(245, 246, 248);
+    height:50px ;
+    align-items: center;
+    font-weight: bold;
+    padding: 5px;
+    margin: 10px;
+}
+.cs-content{
+    display: flex;
+    border-bottom: 1px solid rgb(162, 160, 160);
+    height: 40px;
+    margin: 10px;
+}
+.text{
+    width: 200px;
+    padding-right: 10px;
+}
+.group{
+    padding:10px;
+    float: right;
+}
+.btn{
+    margin: 10px;
+}

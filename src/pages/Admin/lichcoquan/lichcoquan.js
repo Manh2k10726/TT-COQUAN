@@ -2,10 +2,11 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Table  ,DatePicker, Space } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { history } from '../../../App';
-import { AiTwotoneEdit } from 'react-icons/ai';
+import {NavLink} from  'react-router-dom'
 import { ScheduleAction } from '../../../Redux/Action/ManageScheduleAction';
 import { ManageScheduleReducer } from './../../../Redux/Reducer/ManageScheduleReducer';
-export default function ManageUser(props) {
+import moment from 'moment';
+export default function Lichcoquan(props) {
 
     const {lstSchedule} = useSelector(state=>state.ManageScheduleReducer)
     console.log('lstSchedule:',lstSchedule)
@@ -29,7 +30,7 @@ export default function ManageUser(props) {
         // let res = await getLichCoQuan(from_date, to_date);
         // console.log(res);
         // setLichCoQuan(res);
-        // dispatch(ScheduleAction(from_date, to_date));
+        dispatch(ScheduleAction(from_date, to_date));
     };
 
     useEffect(() => {
@@ -40,33 +41,34 @@ export default function ManageUser(props) {
         {
             title: 'Ngày tháng',
             dataIndex: 'start_at',
+            render: (text, item) => {
+                return <Fragment>
+                    {`${moment(item.start_at).format('dddd DD/MM')} `}
+                </Fragment>
+            }
         },
         {
             title: 'Nội dung công việc',
-            dataIndex: 'preparation',
-            // render: (text, item) => {
-            //     return <Fragment>
-            //         {`${item.firstname} ${item.lastname}`}
-            //     </Fragment>
-            // }
+            dataIndex: 'event_notice',
+            render: (text, item) => {
+                return <Fragment>
+                     <NavLink className='hover:text-2xl text-black'
+                        to={`/company-work-schedule/view/${item.schedule_code}`}>
+                        {`${item.event_notice.split(/[<>,</>]/).join('')} `}
+                    </NavLink>
+                    
+                </Fragment>
+            }
         },
         {
             title: 'Tài liệu',
-            dataIndex: 'file_ids',
-            render: (text, item) => {
-                return <Fragment>
-                    {`${item.file_ids.file_title} `}
-                </Fragment>
-            }
+            dataIndex: 'preparation',
+           
         },
         {
             title: 'Thành viên tham gia',
-            dataIndex: 'assignees',
-            render: (text, item) => {
-                return <Fragment>
-                    {`${item.assignees.name_uppercase}`}
-                </Fragment>
-            }
+            dataIndex: 'attenders',
+            
         },
         {
             title: 'Địa điểm',
