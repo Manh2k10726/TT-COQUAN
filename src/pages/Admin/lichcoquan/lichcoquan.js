@@ -36,7 +36,12 @@ export default function Lichcoquan(props) {
     useEffect(() => {
         dispatch(ScheduleAction())    
     }, [])
-
+    var stringToHTML = function (str) {
+        var dom = document.createElement('div');
+        dom.innerHTML = str;
+        return dom;
+    
+    };
     const columns = [
         {
             title: 'Ngày tháng',
@@ -52,9 +57,9 @@ export default function Lichcoquan(props) {
             dataIndex: 'event_notice',
             render: (text, item) => {
                 return <Fragment>
-                     <NavLink className='hover:text-2xl text-black'
+                     <NavLink style={{color:'black'}}
                         to={`/company-work-schedule/view/${item.schedule_code}`}>
-                        {`${item.event_notice.split(/[<>,</>]/).join('')} `}
+                        {`${stringToHTML(item.event_notice).textContent} `}
                     </NavLink>
                     
                 </Fragment>
@@ -105,7 +110,10 @@ export default function Lichcoquan(props) {
             <Space direction="vertical">
                 <DatePicker onChange={onChangeDate} picker="week" />
                 <button type="primary"
-                    className='create-btn' >
+                    className='create-btn' 
+                    onClick={() => {
+                        history.push(`/company-work-schedule/create`)
+                    }} >
                     Tạo sự kiện mới 
                 </button>
             </Space>

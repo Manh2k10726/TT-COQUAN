@@ -1,13 +1,14 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { Table  ,DatePicker, Space } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { ScheduleAction } from '../../../Redux/Action/ManageScheduleAction';
 import './chitietsukien.css';
+import { history } from '../../../App';
 import moment from 'moment';
+
 export default function ChiTietSuKien(props) {
 
     const {lstSchedule} = useSelector(state=>state.ManageScheduleReducer)
-    console.log('lstSchedule detail:',lstSchedule)
+    // console.log('lstSchedule detail:',lstSchedule)
 
     const dispatch = useDispatch();
     
@@ -16,7 +17,12 @@ export default function ChiTietSuKien(props) {
         dispatch(ScheduleAction())    
     }, [])
     
-   
+    var stringToHTML = function (str) {
+        var dom = document.createElement('div');
+        dom.innerHTML = str;
+        return dom;
+    
+    };
     const Chitiet = () =>{
         return lstSchedule?.map((item,index)=>{
             return (
@@ -83,7 +89,7 @@ export default function ChiTietSuKien(props) {
                         Nội dung sự kiện
                         </span>
                         <span className='  font-bold'>
-                        {item.event_notice}
+                        {stringToHTML(item.event_notice).textContent}
                         </span>
                       </div><div className='cs-content'>
                         <span className=' text font-bold'>
@@ -124,7 +130,12 @@ export default function ChiTietSuKien(props) {
                     </div>
                     <div className='group'>
                         <button className='btn btn-danger'>Xóa</button>
-                        <button className='btn btn-primary'>Chỉnh sửa</button>
+                        <button
+                        onClick={() => {
+                            history.push(`/company-work-schedule/views/${item.schedule_code}`)
+                        }}
+                         className='btn btn-primary'
+                        >Chỉnh sửa</button>
                     </div>
                 </div>
             )
