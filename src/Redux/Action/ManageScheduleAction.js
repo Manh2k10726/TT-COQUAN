@@ -1,6 +1,6 @@
 import { manageScheduleService } from "../../services/ManageScheduleService"
 import { message } from 'antd';
-
+import { history } from "../../App";
 
 
 export const ScheduleAction = (from_date,to_date ) => {
@@ -66,6 +66,39 @@ export const departmentsUsersAction = () => {
                 })
             }
            
+        } catch (error) {
+            console.log('error', error.response?.data)
+        }
+    }
+}
+
+export const EditSchedule = (id,data) => {
+    return async dispatch => {
+        try {
+            const result = await manageScheduleService.putSchedule(id,data);
+            if (result.status === 200) {
+                message.success("Cập nhật thành công !!!")
+            }
+            else {
+                message.error("Cập nhật thất bại !!!")
+            }
+        } catch (error) {
+            console.log('error', error.response?.data)
+        }
+    }
+}
+
+export const DelSchedule = (id) => {
+    return async dispatch => {
+        try {
+            const result = await manageScheduleService.delScheduleById(id);
+            if (result.status === 200) {
+                message.success("xóa thành công !!!")
+                history.push(`/Home`)
+            }
+            else {
+                message.error("xóa thất bại !!!")
+            }
         } catch (error) {
             console.log('error', error.response?.data)
         }

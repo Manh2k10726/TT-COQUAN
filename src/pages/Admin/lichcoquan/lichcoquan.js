@@ -83,20 +83,7 @@ export default function Lichcoquan(props) {
             title: 'Chủ trì',
             dataIndex: 'host',
         },
-        // {
-        //     title: '',
-        //     dataIndex: 'id',
-        //     key: 'id',
-        //     render: (text, item) => {
-        //         return <div className='flex'>
-        //             <button className='btn btn-light edit-btn' title='Sửa' onClick={() => {
-        //                 history.push(`/User/${item.id}`)
-        //             }}>
-        //                 <AiTwotoneEdit style={{ fontSize: 20 }}></AiTwotoneEdit>
-        //             </button>
-        //         </div>
-        //     },
-        // },
+       
         
     ];
     
@@ -110,7 +97,7 @@ export default function Lichcoquan(props) {
             <Space direction="vertical">
                 <DatePicker onChange={onChangeDate} picker="week" />
                 <button type="primary"
-                    className='create-btn' 
+                    className='btn btn-primary' 
                     onClick={() => {
                         history.push(`/company-work-schedule/create`)
                     }} >

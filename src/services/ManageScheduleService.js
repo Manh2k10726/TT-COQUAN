@@ -17,6 +17,12 @@ class ManageScheduleService extends baseService2{
     postSchedule = (data)=>{
         return this.post(`api/v1/work-schedules`,data)
     }
+    putSchedule = (id,data)=>{
+        return this.put(`api/v1/work-schedules/${id}`,data)
+    }
+    delScheduleById = (code)=>{
+        return this.delete(`api/v1/work-schedules/${code}`)
+    }
 }
 
 export const manageScheduleService = new ManageScheduleService();

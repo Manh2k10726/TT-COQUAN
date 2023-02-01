@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { TimePicker,TreeSelect,DatePicker, Space,Button } from 'antd';
+import { TimePicker,TreeSelect,DatePicker, Space} from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { ScheduleAction } from '../../../Redux/Action/ManageScheduleAction';
 import './CreateLichCoQuan.css';
@@ -16,9 +16,6 @@ import { render } from '@testing-library/react';
 export default function CreateChiTietSuKien(props) {
     const formik = useFormik({
         initialValues: {
-            // start_day:moment(Date.now()).format("YYYY-MM-DD"),
-            // start_time:moment(Date.now()).format('HH:mm'),
-            // end_time:moment(Date.now()).format('HH:mm'),
             start_at:'',
             end_at:'',
             location:'',
@@ -26,7 +23,7 @@ export default function CreateChiTietSuKien(props) {
             host:'',
             preparation:'',
             attenders:'',
-            departments:'',
+            assignees:[],
         },
         // validationSchema : Yup.object({
         //     start_at: Yup.string()
@@ -40,8 +37,8 @@ export default function CreateChiTietSuKien(props) {
         // }),
         onSubmit: values => {
             console.log(values)
-          alert(JSON.stringify(values, null, 2));
-        //   dispatch(AddSchedule(values))
+            alert(JSON.stringify(values, null, 2));
+            dispatch(AddSchedule(values))
         },
       });
     const dispatch = useDispatch(); 
@@ -66,7 +63,7 @@ export default function CreateChiTietSuKien(props) {
     const [value, setValue] = useState([]);
     const onChange = (newValue) => {
     console.log('onChange ', value);
-    formik.setFieldValue('departments', newValue);
+    formik.setFieldValue('assignees', newValue);
     setValue(newValue);
   };
     const tProps = {
@@ -75,7 +72,7 @@ export default function CreateChiTietSuKien(props) {
         onChange,
         treeCheckable: true,
         showCheckedStrategy: TreeSelect.SHOW_CHILD,
-        placeholder: 'Please select',
+        placeholder: '--Chọn người nhận thông báo--',
         style: {
         width: '100%',
         },
@@ -196,7 +193,7 @@ export default function CreateChiTietSuKien(props) {
                             />
                     </div>
                     <div className='col-12 form-group'>
-                        <label htmlFor="address">Thông báo :</label>
+                        <label htmlFor="assignees">Thông báo :</label>
                         <TreeSelect  {...tProps} />
                     </div>
                 </div>
