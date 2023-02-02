@@ -106,21 +106,21 @@ export default function ChiTietSuKien(props) {
                         Thông báo
                         </span>
                         <span className='  font-bold'>
-                        {lstScheduleById.end_at}
+                        {/* {moment(lstScheduleById.end_at).format('DD/MM/YYYY hh:mm')} */}
                         </span>
                       </div><div className='cs-content'>
                         <span className=' text font-bold'>
                         Ngày tạo
                         </span>
                         <span className='  font-bold'>
-                        {lstScheduleById.created_at}
+                        {moment(lstScheduleById.created_at).format('DD/MM/YYYY hh:mm')}
                         </span>
                       </div><div className='cs-content'>
                         <span className=' text font-bold'>
                         Chỉnh sửa lần cuối
                         </span>
                         <span className='  font-bold'>
-                        {lstScheduleById.updated_at}
+                        {moment(lstScheduleById.updated_at).format('DD/MM/YYYY hh:mm')}
                         </span>
                       </div>
                     </div>

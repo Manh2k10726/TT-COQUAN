@@ -11,6 +11,7 @@ export const loginAction = (dataUser) => {
             console.log('check token',result)
             if (result.status === 200) {
                 sessionStorage.setItem('access_token', result.data.access_token)
+                sessionStorage.setItem('USER_LOGIN',dataUser.username)
                 message.success("Đăng nhập thành công !!!")
                 history.push('/Home');
             }
@@ -23,19 +24,4 @@ export const loginAction = (dataUser) => {
     }
 }
 
-// export const ScheduleAction = (date) => {
-//     return async dispatch => {
-//         try {
-//             const result = await manageUserService.getUserProfile(date);
-//             console.log('check token',result)
-//             if (result.status === 200) {
-//                 // dispatch({
-//                 //     // type: SET_LIST_USER,
-//                 //     lstUser: result.data
-//                 // })
-//             }
-//         } catch (error) {
-//             console.log('error', error.response?.data)
-//         }
-//     }
-// }
+

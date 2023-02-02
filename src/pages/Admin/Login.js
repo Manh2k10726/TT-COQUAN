@@ -2,7 +2,6 @@ import React from 'react'
 import './Login.css'
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 import { loginAction } from '../../Redux/Action/ManageUserAction';
 
 
@@ -17,7 +16,7 @@ export default function Login(props) {
             scope:'openid'
         },
         onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
+            // alert(JSON.stringify(values, null, 2));
             dispatch(loginAction(values))
         },
     });

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import Title from 'antd/lib/typography/Title';
 import SubMenu from 'antd/lib/menu/SubMenu';
-import {Breadcrumb, Layout, Menu ,Button} from 'antd';
+import {Breadcrumb, Layout, Menu } from 'antd';
 import {
   HomeOutlined,ProfileOutlined,FileProtectOutlined,ApartmentOutlined,CalendarOutlined
   ,BarChartOutlined,SnippetsOutlined ,FileSyncOutlined
@@ -9,11 +8,13 @@ import {
 import { Link, useLocation } from 'react-router-dom';
 import './AdminTemplate.css';
 import { Route } from 'react-router';
-
-const { Header, Footer, Sider, Content } = Layout;
+import { history } from '../App';
+const { Header, Sider, Content } = Layout;
 
 
 export default function AdminTemplate(props) {
+    const userLogin = sessionStorage.getItem("USER_LOGIN");
+console.log('check user name:',userLogin)
 const { Component, ...restRoute } = props;
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
@@ -24,16 +25,30 @@ const { Component, ...restRoute } = props;
   const onCollapse = (collapsed) => setCollapsed(collapsed);
   return <Route {...restRoute} render={(propsRoute) => {
   return<>
-        <Layout>
+        <Layout style={{ marginBottom: 5 ,height:'100%'}}>
             <Header  className="header" style={{ padding: 10 }} >
                 <div className="logo-admin" />
-                <div>
-                    <Menu title='demo' theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={items1} />
+                <div className='header-right'>
+                    {/* <div>
+                        <Menu title='demo' theme="dark" mode="horizontal" defaultSelectedKeys={['1']} items={items1} />
+                    </div> */}
+                    <span className='user-name'>
+                       Đ/c {userLogin} !
+                    </span>
+                    <button className='log-out btn btn-danger'
+                        onClick={() => {
+                            history.push(`/login`);
+                        }}
+                    >
+                        Đăng xuất
+                    </button>
                 </div>
             </Header>
         </Layout>
-        <Layout>
-        <Sider style={{ marginTop: 5 ,height:'100%'}} collapsible collapsed={collapsed} onCollapse={onCollapse}>
+        <Layout  style={{
+        minHeight: '100vh',
+      }}>
+        <Sider  collapsible collapsed={collapsed} onCollapse={onCollapse}>
         <Menu
             theme="dark"
             mode="inline"
@@ -104,7 +119,7 @@ const { Component, ...restRoute } = props;
                 >
                     <Menu.ItemGroup key='AboutUS' >
                     <Menu.Item key='location5'> Danh bạ</Menu.Item>
-                    <Menu.Item key='location6'> Thông báo chung</Menu.Item>
+                    <Menu.Item key='location6'> Thông báo chung <Link to="/utility/general-notifications"></Link> </Menu.Item>
                     <Menu.Item key='location7'>Tài liệu ISO</Menu.Item>
                     <Menu.Item key='location8'>VB pháp chế</Menu.Item>
                     <Menu.Item key='location9'> Ký số điện tử</Menu.Item>

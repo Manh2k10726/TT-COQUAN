@@ -1,0 +1,30 @@
+.ThongBao-container{
+    display: flex;
+    justify-content: space-around;
+    background-color: rgb(205, 218, 244);
+}
+.TB-content{
+    height: auto;
+    margin: 5px;
+    border-radius: 3px;
+    background-color: rgb(255, 255, 255) !important;
+}
+.TB-header{
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid gray;
+}
+.TB-body{
+    padding: 15px;
+}
+.TB-footer{
+    /* display: flex; */
+}
+.file-name{
+    display: block;
+    margin-left: 20px;
+}
+.text-file{
+    font-weight: 600;
+}

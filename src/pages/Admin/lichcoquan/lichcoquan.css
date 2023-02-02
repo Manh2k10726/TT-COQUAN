@@ -1,0 +1,11 @@
+.schedule-container{
+    margin-top: 5px;
+}
+.text{
+    font-size: medium;
+    font-weight: 500;
+}
+.header-schedule{
+    display: flex;
+    align-items: center;
+}
