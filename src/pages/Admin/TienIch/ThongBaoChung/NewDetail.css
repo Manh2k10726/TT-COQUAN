@@ -1,44 +1,50 @@
-.TB{
+.CT{
+    height: 100%;
     background-color: rgb(205, 218, 244);
 }
-.ThongBao-container{
+h5{
+padding-top: 10px;
+padding-left: 5px;
+}
+.CT-tb-container{
     display: flex;
     justify-content: space-around;
+    margin:0 15px ;
 }
-.TB-content{
+.CT-TB-content{
     height: auto;
     margin: 5px;
     border-radius: 3px;
     background-color: rgb(255, 255, 255) !important;
 }
-.TB-header{
+.CT-TB-header{
     display: flex;
     justify-content: space-between;
     padding: 15px;
     border-bottom: 1px solid gray;
 }
-.TB-body{
+.CT-TB-body{
     padding: 15px;
 }
-.TB-footer{
+.CT-TB-footer{
     /* display: flex; */
 }
-.file-name{
+.CT-file-name{
     color: rgb(44, 101, 172);
     display: block;
     margin-left: 20px;
 }
-.file{
+.CT-file{
     display: flex;
 }
-.icon-eye:hover{
+.CT-icon-eye:hover{
     background-color: rgb(204, 216, 226);
     margin: 5px;
     border-radius: 1px;
 }
-.file-name:hover{
+.CT-file-name:hover{
     text-decoration: underline;
 }
-.text-file{
+.CT-text-file{
     font-weight: 600;
 }

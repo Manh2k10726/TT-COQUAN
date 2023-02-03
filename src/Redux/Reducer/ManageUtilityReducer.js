@@ -1,6 +1,7 @@
 const initialState = {
     lstNews:[],
-    lstNewsById:[]
+    lstNewsById:[],
+    lstFileById:[]
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -13,6 +14,10 @@ export const ManageNewsReducer = (state = initialState, action) => {
         }
         case "SET_LIST_NEWS_BY_ID": {
             state.lstNewsById = action.dataLstNewsById
+            return { ...state }
+        }
+        case "SET_LIST_FILE_BY_ID": {
+            state.lstFileById = action.dataLstFileById
             return { ...state }
         }
         default:

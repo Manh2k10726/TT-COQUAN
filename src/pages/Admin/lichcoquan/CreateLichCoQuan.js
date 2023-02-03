@@ -35,8 +35,8 @@ export default function CreateChiTietSuKien(props) {
         //       .required('You must fill in this section !!!'),
         // }),
         onSubmit: values => {
-            console.log(values)
-            alert(JSON.stringify(values, null, 2));
+            // console.log(values)
+            // alert(JSON.stringify(values, null, 2));
             dispatch(AddSchedule(values))
         },
       });

@@ -10,6 +10,7 @@ import EditChiTietSuKien from './pages/Admin/lichcoquan/Editlichcoquan';
 import CreateChiTietSuKien from './pages/Admin/lichcoquan/CreateLichCoQuan';
 import ThongBaoChung from './pages/Admin/TienIch/ThongBaoChung/ThongBao';
 import NewsDetail from './pages/Admin/TienIch/ThongBaoChung/NewsDetail';
+import CreateNews from './pages/Admin/TienIch/ThongBaoChung/CreateNew';
 
 export const history = createBrowserHistory();
 export default function App() {
@@ -27,6 +28,8 @@ export default function App() {
         <AdminTemplate path={`/company-work-schedule/create`} exact Component={CreateChiTietSuKien} />
         <AdminTemplate path={`/utility/general-notifications`} exact Component={ThongBaoChung} />
         <AdminTemplate path={`/utility/general-notifications/view/:id`} exact Component={NewsDetail} />
+        <AdminTemplate path={`/utility/general-notifications/create`} exact Component={CreateNews} />
+       
       </Switch>
     </Router>
   )

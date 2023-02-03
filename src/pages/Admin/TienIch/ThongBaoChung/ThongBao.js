@@ -5,34 +5,70 @@ import { history } from '../../../../App';
 import {NavLink} from  'react-router-dom'
 import { AiFillEdit,AiOutlineEye,AiOutlineDelete ,AiOutlineMore} from "react-icons/ai";
 import './ThongBao.css';
-import {NewsAction,getNewsByIdAction} from '../../../../Redux/Action/ManageNewsAction'
+import {NewsAction,getFileById,delNews} from '../../../../Redux/Action/ManageNewsAction'
 import { ManageNewsReducer } from './../../../../Redux/Reducer/ManageUtilityReducer';
+import { render } from '@testing-library/react';
 
 export default function ThongBaoChung(props){
     const dispatch = useDispatch(); 
     useEffect(() => {
         dispatch(NewsAction())
     }, [])
+    useEffect(() => {
+        dispatch(getFileById(fileId))
+    }, [])
     const {lstNews} = useSelector(state=>state.ManageNewsReducer)
-    console.log('check News 2:',lstNews)
-    function handleButtonClick(e) {
-        message.info('Click on left button.');
-      }
-      
-      function handleMenuClick(e) {
-         history.push(`/utility/general-notifications/view/${lstNews.data.id}`)
+    const [ID,setID]=useState();
+    function hanldOnchange(id){
+        setID(id)
+    }
+    const [fileId,setFileId]=useState();
+    console.log(fileId)
+    const [fileName,setFileName]=useState();
+    function downFile(file,name){
+        setFileId(file)
+        setFileName(name)
+        fetch(`https://stg.vimc.fafu.com.vn/api/v1/upload/attachments/${fileId}`,{
+            method:'GET',
+            headers:{
+                'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`},
+        }
+          
+        )
+			.then(response => {
+				response.blob().then(blob => {
+					let url = window.URL.createObjectURL(blob);
+					let a = document.createElement('a');
+					a.href = url;
+					a.download = fileName;
+					a.click();
+                    
+				});
+				// window.location.href = response.url;
+		});
+    }
 
+    
+    const {lstFileById} = useSelector(state=>state.ManageNewsReducer)
+    console.log('check file:',lstFileById)
+      function handleMenuClick() {
+        history.push(`/utility/general-notifications/view/${ID}`)
       }
-      
+
+      function handleDelNew(){
+        dispatch(delNews(ID))
+        dispatch(NewsAction())
+      }
+
       const menu = (
-        <Menu onClick={handleMenuClick}>
-          <Menu.Item key="1" style={{color:'royalblue'}}>
-           <AiOutlineEye/> Xem chi tiết
+        <Menu >
+          <Menu.Item onClick={handleMenuClick} key="1" style={{color:'royalblue'}} >
+           <AiOutlineEye/> Xem chi tiết 
           </Menu.Item>
-          <Menu.Item key="2" style={{color:'royalblue'}}>
+          <Menu.Item  key="2" style={{color:'royalblue'}}>
            <AiFillEdit /> Sửa thông tin
           </Menu.Item>
-          <Menu.Item key="3" style={{color:'red'}}>
+          <Menu.Item onClick={handleDelNew} key="3" style={{color:'red'}}>
             <AiOutlineDelete /> Xóa
           </Menu.Item>
         </Menu>
@@ -41,9 +77,16 @@ export default function ThongBaoChung(props){
         var dom = document.createElement('div');
         dom.innerHTML = str;
         return dom;
-    
     };
     return(
+        <div className='TB'>
+        
+        <button  className=' btn btn-primary'
+          onClick={() => {
+            history.push(`/utility/general-notifications/create`)
+        }}
+        >Đăng thông báo </button>
+
         <div  className='row ThongBao-container'>
        { lstNews&&lstNews.data?.map((item,index)=>{
             return(
@@ -52,7 +95,7 @@ export default function ThongBaoChung(props){
                         <div className='TB-header' key={index}>
                             <span>{item.subject}</span>
                             <Dropdown shape="circle"  placement="bottomLeft"  overlay={menu}>
-                                <Button shape="circle" 
+                                <Button shape="circle" onClick={()=>hanldOnchange(item.id)}
                                 ><AiOutlineMore/></Button>
                             </Dropdown>
                         </div>
@@ -63,9 +106,13 @@ export default function ThongBaoChung(props){
                         <span className='text-file'>Tài liệu đính kèm : </span>
                             {item&&item.attachments?.map((file,index)=>{
                                 return(
-                                <div className='file-name'>
+                                <div className='file'>
+                                <span className='file-name'
+                                    onClick={()=>downFile(file.file_id,file.file_name)}
+                                >
                                     {file.file_name }
-                                    <AiOutlineEye style={{fontSize:'15px',color:'green',margin:'5px'}}/>
+                                </span>
+                                    <AiOutlineEye className='icon-eye' style={{fontSize:'15px',color:'green',margin:'5px'}}/>
                                 </div>)
                             })}
                         </div>
@@ -73,6 +120,7 @@ export default function ThongBaoChung(props){
             </>
             )
         })}
+       </div>
        </div>
     )
 }
