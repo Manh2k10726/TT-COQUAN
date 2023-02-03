@@ -84,3 +84,19 @@ export const delNews = (new_id) => {
         }
     }
 }
+
+export const createNews = (dataNews) => {
+    return async dispatch => {
+        try {
+            const result = await manageUtilityService.postNews(dataNews);
+            if (result.status === 200) {
+                message.success("Thêm mới thông báo thành công !!!")
+            }
+            else {
+                message.error("Thêm mới thông báo thất bại !!!")
+            }
+        } catch (error) {
+            console.log('error', error.response?.data)
+        }
+    }
+}

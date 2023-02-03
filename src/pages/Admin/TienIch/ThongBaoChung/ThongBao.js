@@ -94,13 +94,13 @@ export default function ThongBaoChung(props){
                     <div className='col-5 TB-content'>
                         <div className='TB-header' key={index}>
                             <span>{item.subject}</span>
-                            <Dropdown shape="circle"  placement="bottomLeft"  overlay={menu}>
+                            <Dropdown shape="circle" trigger={['click']} placement="bottomLeft"  overlay={menu}>
                                 <Button shape="circle" onClick={()=>hanldOnchange(item.id)}
                                 ><AiOutlineMore/></Button>
                             </Dropdown>
                         </div>
                         <div className='TB-body'>
-                            {`${stringToHTML(item.content).textContent} `}
+                            <div dangerouslySetInnerHTML={{ __html: (item.content)}} />
                         </div>
                         <div className='TB-footer'>
                         <span className='text-file'>Tài liệu đính kèm : </span>

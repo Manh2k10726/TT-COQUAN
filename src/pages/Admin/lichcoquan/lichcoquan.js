@@ -13,6 +13,7 @@ export default function Lichcoquan(props) {
     console.log('lstSchedule:',lstSchedule)
 
     const dispatch = useDispatch();
+    
     const onChangeDate = (date, dateString) => {
         const monday = new Date(date._d);
         const sunday = new Date(date._d);
@@ -26,19 +27,27 @@ export default function Lichcoquan(props) {
           .toISOString("yyyy-mm-dd")
           .split("T")[0];
         const to_date = new Date(setSunday).toISOString("yyyy-mm-dd").split("T")[0];
-        
+        // setFrom_date(from_date);
+        // setTo_date(to_date)
         dispatch(ScheduleAction(from_date, to_date));
     };
-
+    // const [from_date,setFrom_date] = useState();
+    // const [to_date,setTo_date] = useState();
     useEffect(() => {
-        dispatch(ScheduleAction())    
+        const monday = new Date();
+        const sunday = new Date();
+        var d = monday.getDay();
+        var s = sunday.getDay();
+        var diff = monday.getDate() - d + (d === 0 ? -6 : 1);
+        var diff2 = sunday.getDate() - s + (s === 0 ? 0 : 6);
+        const setMonday = new Date(monday.setDate(diff));
+        const setSunday = new Date(sunday.setDate(diff2));
+        const from_date = new Date(setMonday)
+          .toISOString("yyyy-mm-dd")
+          .split("T")[0];
+        const to_date = new Date(setSunday).toISOString("yyyy-mm-dd").split("T")[0];
+        dispatch(ScheduleAction(from_date, to_date)) ;   
     }, [])
-    var stringToHTML = function (str) {
-        var dom = document.createElement('div');
-        dom.innerHTML = str;
-        return dom;
-    
-    };
 
     const start_ats = new Set();
     React.useEffect(() => {
@@ -83,7 +92,9 @@ export default function Lichcoquan(props) {
                     </div>
                      <NavLink style={{color:'black'}}
                         to={`/company-work-schedule/view/${item.schedule_code}`}>
-                        {`${stringToHTML(item.event_notice).textContent} `}
+                        {/* {`${stringToHTML(item.event_notice).textContent} `} */}
+                        {(item.event_notice).innerHTML }
+                        <div dangerouslySetInnerHTML={{ __html: item.event_notice }} />
                     </NavLink>
                     
                 </Fragment>

@@ -4,56 +4,78 @@ import { history } from '../../../../App';
 import './CreateNew.css';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { Button, Upload } from 'antd';
 import { ManageNewsReducer } from './../../../../Redux/Reducer/ManageUtilityReducer';
 import {uploadFileAction} from '../../../../Redux/Action/ManageNewsAction'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-// import { useForm } from 'react-hook-form';
+import { AiOutlineUpload } from "react-icons/ai";
 
 export default function CreateNews(props){
 
     const formik = useFormik({
         initialValues: {
-            file:[],
-            // firstname: '',
-            // lastname: '',
-            // email: '',
-            // phone:'',
-            // address:'',
-            // birthday:'',
-            // gender:'',
+            file:[],    
         },
         
         onSubmit: values => {
             let formData = new FormData();
             formData.append('file', values['file']);
         //   alert(JSON.stringify(values, null, 2));
-            dispatch(uploadFileAction(formData.name));
+            // dispatch(uploadFileAction(formData.name));
         },
       });
     const dispatch = useDispatch(); 
     useEffect(() => {
-        // dispatch(NewsAction())
+        // dispatch(postNews())
     }, [])
+    const [file,setFile] = useState();
     const handleFile=(e)=>{
         console.log('check file',e.target.files)
         console.log('check file',e.target.files[0])
         const file = e.target.files[0];
-        if (file) {
-            // // tạo đối tượng để đọc file
-            // let reader = new FileReader();
-            // reader.readAsDataURL(file);
-            // reader.onload = (e) => {
-            //     setSrcImg(e.target.result)
-            // }
-            formik.setFieldValue('file', file)
-        }
+        setFile(e.target.files[0])
     }
-    // const handleUpload = (e)=>{
-    //     let formData = new FormData();
-    //     formData.append('file',e.target.files[0])
-    //     dispatch(uploadFileAction(formData))
-    // }
+  const  uploadFileData = (event) => {
+		event.preventDefault();
+		// this.setState({msg: ''});
+
+		let data = new FormData();
+		data.append('file', file);
+
+		fetch('https://stg.vimc.fafu.com.vn/api/v1/upload' ,{
+			method: 'POST',
+			body: data,
+            headers:{
+                'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`},
+		}).then(response => {
+			// this.setState({msg: "File successfully uploaded"});
+            console.log('res:',response)
+		}).catch(err => {
+			// this.setState({error: err});
+		});
+
+	}
+    const [fileList, setFileList] = useState();
+      const handleChange = (info) => {
+        let newFileList = [...info.fileList];
+        newFileList = newFileList.slice(-2);
+        newFileList = newFileList.map((file) => {
+          if (file.response) {
+            // Component will show file.url as link
+            file.url = file.response.url;
+          }
+          return file;
+        });
+        setFileList(newFileList);
+      };
+      const Props = {
+        action: 'https://stg.vimc.fafu.com.vn/api/v1/upload',
+        onChange: handleChange,
+        multiple: true,
+        headers:{
+            'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`},
+      };
     return(
         <>
           <form onSubmit={formik.handleSubmit}>
@@ -86,14 +108,18 @@ export default function CreateNews(props){
                         
                     >
                         <label htmlFor="address">Tài liệu đính kèm :</label>
-                            <input  className='form-control-file'
+                            {/* <input  className='form-control-file'
                                type='file'  name="file"  onChange={(e)=>handleFile(e)}
                             />
                            <button
                            className='btn btn-info' 
-                            // onClick={(e)=>handleUpload(e)} 
-                            type='submit'
-                             >Upload file</button>
+                           onClick={(event)=>uploadFileData(event)}
+                            // type='submit'
+                             >Upload file</button> */}
+
+                            <Upload {...Props} fileList={fileList}>
+                                <button className='btn btn-info'  ><AiOutlineUpload style={{fontSize:'20px'}}/> Upload</button>
+                            </Upload>
                     </form>
                 </div>
                 

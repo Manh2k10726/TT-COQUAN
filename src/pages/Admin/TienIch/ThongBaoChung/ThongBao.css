@@ -19,6 +19,10 @@
 }
 .TB-body{
     padding: 15px;
+    
+}
+img{
+    width: 100%;
 }
 .TB-footer{
     /* display: flex; */

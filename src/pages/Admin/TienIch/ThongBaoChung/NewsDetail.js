@@ -20,6 +20,31 @@ export default function NewsDetail(props){
         dom.innerHTML = str;
         return dom;
     };
+    const [fileId,setFileId]=useState();
+    console.log(fileId)
+    const [fileName,setFileName]=useState();
+    function downFile(file,name){
+        setFileId(file)
+        setFileName(name)
+        fetch(`https://stg.vimc.fafu.com.vn/api/v1/upload/attachments/${fileId}`,{
+            method:'GET',
+            headers:{
+                'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`},
+        }
+          
+        )
+			.then(response => {
+				response.blob().then(blob => {
+					let url = window.URL.createObjectURL(blob);
+					let a = document.createElement('a');
+					a.href = url;
+					a.download = fileName;
+					a.click();
+                    
+				});
+				// window.location.href = response.url;
+		});
+    }
     return(
         <div className='CT'>
          <h5 >Chi tiết thông báo</h5>
@@ -36,7 +61,9 @@ export default function NewsDetail(props){
                         <span className='CT-text-file'>Tài liệu đính kèm : </span>
                             {lstNewsById&&lstNewsById.attachments?.map((file,index)=>{
                                 return(
-                                <div className='CT-file-name'>
+                                <div className='CT-file-name'
+                                onClick={()=>downFile(file.file_id,file.file_name)}
+                                >
                                     {file.file_name }
                                     <AiOutlineEye style={{fontSize:'15px',color:'green',margin:'5px'}}/>
                                 </div>)
