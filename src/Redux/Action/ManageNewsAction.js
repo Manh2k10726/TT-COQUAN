@@ -75,6 +75,8 @@ export const delNews = (new_id) => {
             const result = await manageUtilityService.delNews(new_id);
             if (result.status === 200) {
                 message.success("Xóa thông báo thành công !!!")
+                history.push(`/utility/general-notifications`)
+                dispatch(NewsAction())
             }
             else {
                 message.error("Xóa thông báo thất bại !!!")
@@ -91,6 +93,7 @@ export const createNews = (dataNews) => {
             const result = await manageUtilityService.postNews(dataNews);
             if (result.status === 200) {
                 message.success("Thêm mới thông báo thành công !!!")
+                history.push(`/utility/general-notifications`)
             }
             else {
                 message.error("Thêm mới thông báo thất bại !!!")

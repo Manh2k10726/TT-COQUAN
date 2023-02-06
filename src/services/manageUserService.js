@@ -10,6 +10,9 @@ class ManageUserService extends baseService {
     login = (data) => {
         return this.post(`auth/realms/VIMC/protocol/openid-connect/token`,(data))
     }
+    getUser=()=>{
+        return this.get(`api/v1/users/current-user`)
+    }
 
 }
 

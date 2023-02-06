@@ -6,63 +6,57 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Button, Upload } from 'antd';
 import { ManageNewsReducer } from './../../../../Redux/Reducer/ManageUtilityReducer';
-import {uploadFileAction} from '../../../../Redux/Action/ManageNewsAction'
+import {createNews, uploadFileAction} from '../../../../Redux/Action/ManageNewsAction'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { AiOutlineUpload } from "react-icons/ai";
+import { ManageUserReducer } from './../../../../Redux/Reducer/ManageUserReducer';
+import { getCurrentUser } from '../../../../Redux/Action/ManageUserAction';
 
 export default function CreateNews(props){
+    const {lstCurrentUser} = useSelector(state => state.ManageUserReducer);
+    console.log('check data current user :',lstCurrentUser)
+    const dispatch = useDispatch(); 
+    useEffect(() => {
+        dispatch(getCurrentUser())
+    }, [])
 
+    const [fileID, setFileID] = useState();
+    console.log('check data file id :',fileID)
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
-            file:[],    
+            attachments_request:{
+                new_items:[`${fileID}`]
+            },
+            author:{
+                name_lowercase:lstCurrentUser.name_lowercase,
+                username:lstCurrentUser.username
+            },
+            content:'',
+            subject:'',
+            id:''
         },
         
         onSubmit: values => {
-            let formData = new FormData();
-            formData.append('file', values['file']);
         //   alert(JSON.stringify(values, null, 2));
-            // dispatch(uploadFileAction(formData.name));
+            dispatch(createNews(values));
         },
       });
-    const dispatch = useDispatch(); 
-    useEffect(() => {
-        // dispatch(postNews())
-    }, [])
-    const [file,setFile] = useState();
-    const handleFile=(e)=>{
-        console.log('check file',e.target.files)
-        console.log('check file',e.target.files[0])
-        const file = e.target.files[0];
-        setFile(e.target.files[0])
-    }
-  const  uploadFileData = (event) => {
-		event.preventDefault();
-		// this.setState({msg: ''});
-
-		let data = new FormData();
-		data.append('file', file);
-
-		fetch('https://stg.vimc.fafu.com.vn/api/v1/upload' ,{
-			method: 'POST',
-			body: data,
-            headers:{
-                'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`},
-		}).then(response => {
-			// this.setState({msg: "File successfully uploaded"});
-            console.log('res:',response)
-		}).catch(err => {
-			// this.setState({error: err});
-		});
-
-	}
+   
     const [fileList, setFileList] = useState();
+   
       const handleChange = (info) => {
+        console.log('info',info)
         let newFileList = [...info.fileList];
         newFileList = newFileList.slice(-2);
         newFileList = newFileList.map((file) => {
           if (file.response) {
             // Component will show file.url as link
+            file.fileID = file.response.file_id;
+            console.log('check fileId:',file.fileID)
+            setFileID(file.fileID)
+
             file.url = file.response.url;
           }
           return file;
@@ -83,20 +77,30 @@ export default function CreateNews(props){
                 <div className='row Create-new-container'>
                     <div className='col-12 form-group CrNew-content'>
                         <label>Tiêu đề(*):</label>
-                        <input className='form-control'></input>
+                        <input className='form-control' 
+                            id="subject"
+                            name="subject"
+                            type="text"
+                            onChange={formik.handleChange}
+                        ></input>
                     </div>
-                    <div className='col-12 form-group'>
+                    <div className='col-12 form-group'
+                        id="content"
+                        name="content"
+                        type="text"
+                        onChange={formik.handleChange}
+                    >
                         <label htmlFor="address">Nội dung sự kiện :</label>
                         <CKEditor
                             editor={ ClassicEditor }
-                            // data={formik.values.event_notice}
-                            name='event_notice'
+                            data=""
+                            name='content'
                             
                             onReady={ editor => {
                             } }
                             onChange={ ( event, editor ) => {
                                 const data = editor.getData();
-                                // formik.setFieldValue('event_notice', data);
+                                formik.setFieldValue('content', data);
                             } }
                             onBlur={ ( event, editor ) => {
                             } }
@@ -104,25 +108,16 @@ export default function CreateNews(props){
                             } }
                         />
                     </div>
-                    <form  className='col-12 form-group'
-                        
-                    >
-                        <label htmlFor="address">Tài liệu đính kèm :</label>
-                            {/* <input  className='form-control-file'
-                               type='file'  name="file"  onChange={(e)=>handleFile(e)}
-                            />
-                           <button
-                           className='btn btn-info' 
-                           onClick={(event)=>uploadFileData(event)}
-                            // type='submit'
-                             >Upload file</button> */}
+                        <label htmlFor="address">Tài liệu đính kèm :</label>  
 
                             <Upload {...Props} fileList={fileList}>
-                                <button className='btn btn-info'  ><AiOutlineUpload style={{fontSize:'20px'}}/> Upload</button>
+                                <button className='btn btn-light' style={{alignItems:'center'}} ><AiOutlineUpload style={{fontSize:'20px'}}/> Chọn tài liệu đính kèm</button>
                             </Upload>
-                    </form>
+                    
                 </div>
-                
+                <div>
+                    <button className='btn btn-primary' type='submit' style={{float:'right'}}>Đăng thông báo</button>
+                </div>
             </div>
             </form>
         </>

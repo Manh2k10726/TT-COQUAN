@@ -24,4 +24,22 @@ export const loginAction = (dataUser) => {
     }
 }
 
+export const getCurrentUser = () => {
+    return async dispatch => {
+        try {
+            const result = await manageUserService.getUser();
+            console.log('check current user:',result)
+            if (result.status === 200) {
+                dispatch({
+                    type:'SET_LIST_CURRENT_USER',
+                    dataLstCurrentUser:result.data
+                })
+            }
+            
+        } catch (error) {
+            console.log('error', error.response?.data)
+        }
+    }
+}
+
 

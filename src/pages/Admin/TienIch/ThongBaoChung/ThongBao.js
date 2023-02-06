@@ -23,12 +23,10 @@ export default function ThongBaoChung(props){
         setID(id)
     }
     const [fileId,setFileId]=useState();
-    console.log(fileId)
-    const [fileName,setFileName]=useState();
-    function downFile(file,name){
+    // const [fileName,setFileName]=useState();
+    function downFile (file,name){
         setFileId(file)
-        setFileName(name)
-        fetch(`https://stg.vimc.fafu.com.vn/api/v1/upload/attachments/${fileId}`,{
+        fetch(`https://stg.vimc.fafu.com.vn/api/v1/upload/attachments/${file}`,{
             method:'GET',
             headers:{
                 'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`},
@@ -40,7 +38,7 @@ export default function ThongBaoChung(props){
 					let url = window.URL.createObjectURL(blob);
 					let a = document.createElement('a');
 					a.href = url;
-					a.download = fileName;
+					a.download = name;
 					a.click();
                     
 				});
@@ -56,8 +54,8 @@ export default function ThongBaoChung(props){
       }
 
       function handleDelNew(){
-        dispatch(delNews(ID))
-        dispatch(NewsAction())
+        dispatch(delNews(ID));
+        // dispatch(NewsAction())
       }
 
       const menu = (
@@ -73,11 +71,7 @@ export default function ThongBaoChung(props){
           </Menu.Item>
         </Menu>
       );
-      var stringToHTML = function (str) {
-        var dom = document.createElement('div');
-        dom.innerHTML = str;
-        return dom;
-    };
+
     return(
         <div className='TB'>
         
@@ -107,7 +101,7 @@ export default function ThongBaoChung(props){
                             {item&&item.attachments?.map((file,index)=>{
                                 return(
                                 <div className='file'>
-                                <span className='file-name'
+                                <span style={{cursor: 'pointer'}} className='file-name'
                                     onClick={()=>downFile(file.file_id,file.file_name)}
                                 >
                                     {file.file_name }

@@ -1,5 +1,7 @@
 import Axios from 'axios';
 import { DOMAIN } from '../config';
+import { DOMAIN2 } from '../config';
+
 
 export class baseService {
     post = (url, model) => {
@@ -9,6 +11,15 @@ export class baseService {
                 'Content-Type': 'application/x-www-form-urlencoded'},
             method: 'POST',
             data: model
+        })
+    }
+
+    get = (url) => {
+        return Axios({
+            url: `${DOMAIN2}/${url}`,
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`},
+            method: 'GET',
         })
     }
    

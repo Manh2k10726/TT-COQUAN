@@ -21,7 +21,7 @@ export default function NewsDetail(props){
         return dom;
     };
     const [fileId,setFileId]=useState();
-    console.log(fileId)
+    
     const [fileName,setFileName]=useState();
     function downFile(file,name){
         setFileId(file)
