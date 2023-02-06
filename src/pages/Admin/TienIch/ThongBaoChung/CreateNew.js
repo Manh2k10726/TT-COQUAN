@@ -4,16 +4,16 @@ import { history } from '../../../../App';
 import './CreateNew.css';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Button, Upload } from 'antd';
+import {  Button,Upload } from 'antd';
 import { ManageNewsReducer } from './../../../../Redux/Reducer/ManageUtilityReducer';
-import {createNews, uploadFileAction} from '../../../../Redux/Action/ManageNewsAction'
+import {createNews} from '../../../../Redux/Action/ManageNewsAction'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { AiOutlineUpload } from "react-icons/ai";
 import { ManageUserReducer } from './../../../../Redux/Reducer/ManageUserReducer';
 import { getCurrentUser } from '../../../../Redux/Action/ManageUserAction';
 
-export default function CreateNews(props){
+export default function CreateNews(){
     const {lstCurrentUser} = useSelector(state => state.ManageUserReducer);
     console.log('check data current user :',lstCurrentUser)
     const dispatch = useDispatch(); 
@@ -27,7 +27,7 @@ export default function CreateNews(props){
         enableReinitialize: true,
         initialValues: {
             attachments_request:{
-                new_items:[`${fileID}`]
+                new_items:fileID ,
             },
             author:{
                 name_lowercase:lstCurrentUser.name_lowercase,
@@ -45,30 +45,56 @@ export default function CreateNews(props){
       });
    
     const [fileList, setFileList] = useState();
-   
-      const handleChange = (info) => {
-        console.log('info',info)
-        let newFileList = [...info.fileList];
-        newFileList = newFileList.slice(-2);
-        newFileList = newFileList.map((file) => {
-          if (file.response) {
-            // Component will show file.url as link
-            file.fileID = file.response.file_id;
-            console.log('check fileId:',file.fileID)
-            setFileID(file.fileID)
+    // const [uploading, setUploading] = useState(false);
+    // const handleUpload = () => {
+    //     setUploading(true)
+    // }
+    //   const handleChange = (info) => {
+    //     console.log('info',info)
+    //     let newFileList = [...info.fileList];
+    //     newFileList = newFileList.slice(-2);
+    //     newFileList = newFileList.map((file) => {
+    //       if (file.response) {
+    //         // Component will show file.url as link
+    //         file.fileID = file.response.file_id;
+    //         console.log('check fileId:',file.fileID)
+    //         setFileID(file.fileID)
 
-            file.url = file.response.url;
-          }
-          return file;
-        });
-        setFileList(newFileList);
-      };
-      const Props = {
+    //         file.url = file.response.url;
+    //       }
+    //       return file;
+    //     });
+    //     setFileList(newFileList);
+    //   };
+    //   const Props = {
+    //     action: 'https://stg.vimc.fafu.com.vn/api/v1/upload',
+    //     onChange: handleChange,
+    //     multiple: true,
+    //     headers:{
+    //         'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`},
+    //     // beforeUpload: (file) => {
+    //     //     setFileList([...fileList, file]);
+    //     //     return true;
+    //     // },
+    //   };
+  
+	const props = {
+        name: 'file',
         action: 'https://stg.vimc.fafu.com.vn/api/v1/upload',
-        onChange: handleChange,
         multiple: true,
         headers:{
-            'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`},
+                    'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`},
+        onChange(info) {
+          if (info.file.status !== 'uploading') {
+            console.log(info.file, info.fileList);
+          }
+          if (info.file.status === 'done') {
+            const listID = info.fileList?.map((item)=>item.response.file_id)
+            setFileID(listID)
+          } else if (info.file.status === 'error') {
+            // message.error(`${info.file.name} file upload failed.`);
+          }
+        },
       };
     return(
         <>
@@ -110,13 +136,16 @@ export default function CreateNews(props){
                     </div>
                         <label htmlFor="address">Tài liệu đính kèm :</label>  
 
-                            <Upload {...Props} fileList={fileList}>
+                            <Upload {...props} fileList={fileList}>
                                 <button className='btn btn-light' style={{alignItems:'center'}} ><AiOutlineUpload style={{fontSize:'20px'}}/> Chọn tài liệu đính kèm</button>
                             </Upload>
-                    
+                            
+                           
                 </div>
                 <div>
-                    <button className='btn btn-primary' type='submit' style={{float:'right'}}>Đăng thông báo</button>
+                    <button className='btn btn-primary'
+                                // onClick={handleUpload}
+                                type='submit' style={{float:'right'}}>Đăng thông báo</button>
                 </div>
             </div>
             </form>

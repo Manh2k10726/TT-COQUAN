@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import './CreateLichCoQuan.css';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { AiOutlineUpload } from "react-icons/ai";
+import {  Upload } from 'antd';
 import {departmentsUsersAction,AddSchedule} from '../../../Redux/Action/ManageScheduleAction'
 import moment from 'moment';
 import { ManageScheduleReducer } from './../../../Redux/Reducer/ManageScheduleReducer';
@@ -13,12 +15,14 @@ import { render } from '@testing-library/react';
 
 
 export default function CreateChiTietSuKien(props) {
+    const [fileID, setFileID] = useState();
     const formik = useFormik({
         initialValues: {
             start_at:'',
             end_at:'',
             location:'',
             event_notice: '',
+            file_id:[`${fileID}`],
             host:'',
             preparation:'',
             attenders:'',
@@ -89,6 +93,32 @@ export default function CreateChiTietSuKien(props) {
     };
     const onChangeTimeEnd = (time, timeString) => {
         formik.setFieldValue('end_at', time)
+    };
+    const [fileList, setFileList] = useState();
+   
+    const handleChange = (info) => {
+      console.log('info',info)
+      let newFileList = [...info.fileList];
+      newFileList = newFileList.slice(-2);
+      newFileList = newFileList.map((file) => {
+        if (file.response) {
+          // Component will show file.url as link
+          file.fileID = file.response.file_id;
+          console.log('check fileId:',file.fileID)
+          setFileID(file.fileID)
+
+          file.url = file.response.url;
+        }
+        return file;
+      });
+      setFileList(newFileList);
+    };
+    const Props = {
+      action: 'https://stg.vimc.fafu.com.vn/api/v1/upload',
+      onChange: handleChange,
+      multiple: true,
+      headers:{
+          'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`},
     };
         return (
             
@@ -176,9 +206,9 @@ export default function CreateChiTietSuKien(props) {
                     </div>
                     <div className='col-12 form-group'>
                         <label htmlFor="address">Tài liệu đính kèm :</label>
-                            <input className='form-control-file'
-                               type='file' 
-                            />
+                            <Upload {...Props} fileList={fileList}>
+                                <button className='btn btn-light' style={{alignItems:'center'}} ><AiOutlineUpload style={{fontSize:'20px'}}/> Chọn tài liệu đính kèm</button>
+                            </Upload>
                            
                     </div>
                     <div className='col-12 form-group'>

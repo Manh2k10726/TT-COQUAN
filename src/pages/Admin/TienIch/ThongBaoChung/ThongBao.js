@@ -100,6 +100,7 @@ export default function ThongBaoChung(props){
                         <span className='text-file'>Tài liệu đính kèm : </span>
                             {item&&item.attachments?.map((file,index)=>{
                                 return(
+                                file.file_id&&file.file_name?
                                 <div className='file'>
                                 <span style={{cursor: 'pointer'}} className='file-name'
                                     onClick={()=>downFile(file.file_id,file.file_name)}
@@ -107,7 +108,11 @@ export default function ThongBaoChung(props){
                                     {file.file_name }
                                 </span>
                                     <AiOutlineEye className='icon-eye' style={{fontSize:'15px',color:'green',margin:'5px'}}/>
-                                </div>)
+                                </div>
+                                :<>
+                                    không có tài liệu đính kèm
+                                </>
+                                )
                             })}
                         </div>
                     </div>

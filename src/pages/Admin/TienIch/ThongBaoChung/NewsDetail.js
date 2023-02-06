@@ -1,9 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { Table,Menu ,Dropdown ,DatePicker, Space,Button,message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { history } from '../../../../App';
-import { AiFillEdit,AiOutlineEye,AiOutlineDelete ,AiOutlineMore} from "react-icons/ai";
-import {NavLink} from  'react-router-dom'
+import { AiOutlineEye} from "react-icons/ai";
 import './NewDetail.css'
 import {getNewsByIdAction} from '../../../../Redux/Action/ManageNewsAction'
 import { ManageNewsReducer } from './../../../../Redux/Reducer/ManageUtilityReducer';
@@ -20,13 +18,8 @@ export default function NewsDetail(props){
         dom.innerHTML = str;
         return dom;
     };
-    const [fileId,setFileId]=useState();
-    
-    const [fileName,setFileName]=useState();
     function downFile(file,name){
-        setFileId(file)
-        setFileName(name)
-        fetch(`https://stg.vimc.fafu.com.vn/api/v1/upload/attachments/${fileId}`,{
+        fetch(`https://stg.vimc.fafu.com.vn/api/v1/upload/attachments/${file}`,{
             method:'GET',
             headers:{
                 'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`},
@@ -38,7 +31,7 @@ export default function NewsDetail(props){
 					let url = window.URL.createObjectURL(blob);
 					let a = document.createElement('a');
 					a.href = url;
-					a.download = fileName;
+					a.download = name;
 					a.click();
                     
 				});
