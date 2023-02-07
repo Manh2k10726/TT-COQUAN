@@ -4,6 +4,7 @@ import { ScheduleAction ,ScheduleByIdAction} from '../../../Redux/Action/ManageS
 import './chitietsukien.css';
 import { history } from '../../../App';
 import moment from 'moment';
+import { AiOutlineEye } from "react-icons/ai";
 
 export default function ChiTietSuKien(props) {
 
@@ -24,16 +25,16 @@ export default function ChiTietSuKien(props) {
     return(
         <div className=''>
                     <div className='header'>
-                    <span className=' text-3xl font-bold'>
+                    <span style={{fontWeight:'500',fontSize:'20px'}}>
                         Chi tiết sự kiện
                     </span>     
                     </div>
-                    <div className=''>
+                    <div className='Detail'>
                       <div className='cs-container'>
                         <span className=' text font-bold'>
                             Thông tin
                         </span>
-                        <span className='  font-bold'>
+                        <span style={{fontWeight:'500'}}>
                             Mô tả chi tiết
                         </span>
                       </div>
@@ -85,14 +86,20 @@ export default function ChiTietSuKien(props) {
                         Nội dung sự kiện
                         </span>
                         <span className='  font-bold'>
-                        {stringToHTML(lstScheduleById.event_notice).textContent}
+                        <div dangerouslySetInnerHTML={{ __html: lstScheduleById.event_notice }} />
                         </span>
                       </div><div className='cs-content'>
                         <span className=' text font-bold'>
                         Tài liệu đính kèm
                         </span>
                         <span className='  font-bold'>
-                        {lstScheduleById.file_ids}
+                       {lstScheduleById&&lstScheduleById.file_ids?.map((item)=>{
+                        return(
+                          <div style={{color:'blue'}}>
+                          {item.file_title} <AiOutlineEye style={{color:"green"}}/>
+                          </div>
+                        )
+                       })}
                         </span>
                       </div><div className='cs-content'>
                         <span className=' text font-bold'>

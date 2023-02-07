@@ -26,6 +26,9 @@ class ManageUtilityService extends baseService2{
     postNews=(dataNews)=>{
         return this.post('api/v1/news',dataNews)
     }
+    editNewsById=(data)=>{
+        return this.patch(`api/v1/news`,data)
+    }
 }
 
 export const manageUtilityService = new ManageUtilityService();

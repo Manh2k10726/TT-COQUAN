@@ -1,13 +1,12 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { Table,Menu ,Dropdown ,DatePicker, Space,Button,message } from 'antd';
+import { Table,Menu ,Dropdown , Space,Button,message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { history } from '../../../../App';
 import {NavLink} from  'react-router-dom'
 import { AiFillEdit,AiOutlineEye,AiOutlineDelete ,AiOutlineMore} from "react-icons/ai";
 import './ThongBao.css';
 import {NewsAction,getFileById,delNews} from '../../../../Redux/Action/ManageNewsAction'
-import { ManageNewsReducer } from './../../../../Redux/Reducer/ManageUtilityReducer';
-import { render } from '@testing-library/react';
+import {InfiniteScroll} from 'react-infinite-scroll'
 
 export default function ThongBaoChung(props){
     const dispatch = useDispatch(); 
@@ -57,13 +56,15 @@ export default function ThongBaoChung(props){
         dispatch(delNews(ID));
         // dispatch(NewsAction())
       }
-
+      function goToEditNews(){
+        history.push(`/utility/general-notifications/update/${ID}`)
+      }
       const menu = (
         <Menu >
           <Menu.Item onClick={handleMenuClick} key="1" style={{color:'royalblue'}} >
            <AiOutlineEye/> Xem chi tiết 
           </Menu.Item>
-          <Menu.Item  key="2" style={{color:'royalblue'}}>
+          <Menu.Item  onClick={goToEditNews} key="2" style={{color:'royalblue'}}>
            <AiFillEdit /> Sửa thông tin
           </Menu.Item>
           <Menu.Item onClick={handleDelNew} key="3" style={{color:'red'}}>
@@ -73,14 +74,20 @@ export default function ThongBaoChung(props){
       );
 
     return(
+        <>
+        {/* <InfiniteScroll> */}
+        <div style={{paddingBottom:'15px',paddingTop:'10px',display:'flex',justifyContent:'space-between'}}>
+            <span style={{fontWeight:'500',fontSize:'20px'}}>
+                Thông báo chung
+            </span>
+            <button style={{}} className=' btn btn-primary'
+                onClick={() => {
+                history.push(`/utility/general-notifications/create`)
+                }}
+                >Đăng thông báo 
+            </button>
+        </div>
         <div className='TB'>
-        
-        <button  className=' btn btn-primary'
-          onClick={() => {
-            history.push(`/utility/general-notifications/create`)
-        }}
-        >Đăng thông báo </button>
-
         <div  className='row ThongBao-container'>
        { lstNews&&lstNews.data?.map((item,index)=>{
             return(
@@ -121,5 +128,7 @@ export default function ThongBaoChung(props){
         })}
        </div>
        </div>
+       {/* </InfiniteScroll> */}
+       </>
     )
 }

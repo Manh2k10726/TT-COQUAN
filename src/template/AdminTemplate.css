@@ -39,3 +39,8 @@
   .log-out{
     text-align: center;
   }
+  .ant-layout-content {
+    flex: auto;
+    min-height: 700px !important;
+    /* height: 700px !important; */
+}

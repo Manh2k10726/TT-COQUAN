@@ -25,7 +25,7 @@ const { Component, ...restRoute } = props;
   const onCollapse = (collapsed) => setCollapsed(collapsed);
   return <Route {...restRoute} render={(propsRoute) => {
   return<>
-        <Layout style={{ marginBottom: 5 ,height:'100%'}}>
+        <Layout style={{position: 'sticky',top: '0',width:'100%',zIndex:'100', marginBottom: 5 ,height:'100%'}}>
             <Header  className="header" style={{ padding: 10 }} >
                 <div className="logo-admin" />
                 <div className='header-right'>
@@ -45,10 +45,13 @@ const { Component, ...restRoute } = props;
                 </div>
             </Header>
         </Layout>
-        <Layout  style={{
-        minHeight: '100vh',
-      }}>
-        <Sider  collapsible collapsed={collapsed} onCollapse={onCollapse}>
+
+        <Layout hasSider >
+        <Sider style={{
+        overflow: "auto",
+        height: "100vh",
+        position: "fixed",
+      }} collapsible collapsed={collapsed} onCollapse={onCollapse}>
         <Menu
             theme="dark"
             mode="inline"
@@ -143,26 +146,35 @@ const { Component, ...restRoute } = props;
             </SubMenu>
         </Menu>
         </Sider>
+
+        
         <Layout
             style={{
             padding: '0 24px 24px',
+            overflow: "initial",
+            marginLeft: 200,
+            backgroundColor:'#cddaf4'
             }}
         >
-            <Breadcrumb
+            {/* <Breadcrumb
             style={{
                 margin: '16px 0',
+                borderBottom:'1px solid gray'
             }}
             >
             <Breadcrumb.Item>Home</Breadcrumb.Item>
             <Breadcrumb.Item>List</Breadcrumb.Item>
             <Breadcrumb.Item>App</Breadcrumb.Item>
-            </Breadcrumb>
+            </Breadcrumb> */}
             <Content
             className="site-layout-background"
             style={{
-                padding: 24,
+                // padding: 24,
                 margin: 0,
                 minHeight: 280,
+                margin: "24px 16px 0",
+                marginTop:'0',
+                backgroundColor:'#cddaf4'
             }}
             >
             <Component {...propsRoute} />

@@ -27,6 +27,8 @@ export const AddSchedule = (data) => {
             const result = await manageScheduleService.postSchedule(data);
             if (result.status === 200) {
                 message.success("Thêm mới thành công !!!")
+                // history.push(`/company-work-schedule`)
+                dispatch(ScheduleAction())
             }
             else {
                 message.error("Thêm mới thất bại !!!")
@@ -94,7 +96,8 @@ export const DelSchedule = (id) => {
             const result = await manageScheduleService.delScheduleById(id);
             if (result.status === 200) {
                 message.success("xóa thành công !!!")
-                history.push(`/Home`)
+                history.push(`/company-work-schedule`)
+                dispatch(ScheduleAction())
             }
             else {
                 message.error("xóa thất bại !!!")

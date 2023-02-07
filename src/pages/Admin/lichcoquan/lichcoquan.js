@@ -87,13 +87,15 @@ export default function Lichcoquan(props) {
             dataIndex: 'event_notice',
             render: (text, item) => {
                 return <Fragment>
-                    <div style={{fontWeight:'500'}}>
-                        {`${moment(item.start_at).format('LT')} to ${moment(item.end_at).format('LT')}`}
-                    </div>
-                     <NavLink style={{color:'black'}}
+                    <NavLink style={{color:'black'}}
+                   
+                     
                         to={`/company-work-schedule/view/${item.schedule_code}`}>
-                        {/* {`${stringToHTML(item.event_notice).textContent} `} */}
-                        {(item.event_notice).innerHTML }
+                        {/* {`${stringToHTML(item.event_notice).textContent} `}
+                        {(item.event_notice).innerHTML } */}
+                         <div style={{fontWeight:'500'}}>
+                            {`${moment(item.start_at).format('LT')} to ${moment(item.end_at).format('LT')}`}
+                        </div>
                         <div dangerouslySetInnerHTML={{ __html: item.event_notice }} />
                     </NavLink>
                     
@@ -151,9 +153,8 @@ export default function Lichcoquan(props) {
                     dataSource={lstSchedule}
                     columns={columns}
                     key=''
-                    
+                    pagination= {false}
                     />
-
             </div>
         </div>
     )

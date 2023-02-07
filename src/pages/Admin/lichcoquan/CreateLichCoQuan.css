@@ -1,5 +1,7 @@
 .create-container{
-    padding:10px 80px;
+    margin:20px 80px;
+    padding-top: 10px;
+    background-color: white;
 }
 .button-create{
     padding:10px 80px;

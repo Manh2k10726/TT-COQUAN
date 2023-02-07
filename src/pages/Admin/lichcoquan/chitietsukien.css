@@ -1,17 +1,21 @@
+.Detail{
+    margin-top: 10px;
+    background-color: rgb(245, 246, 248);
+}
 .cs-container{
     display:flex;
     border-radius: 7px;
     background-color: rgb(245, 246, 248);
     height:50px ;
     align-items: center;
-    font-weight: bold;
+    font-weight: 400;
     padding: 5px;
     margin: 10px;
 }
 .cs-content{
     display: flex;
     border-bottom: 1px solid rgb(162, 160, 160);
-    height: 40px;
+    height: auto;
     margin: 10px;
 }
 .text{

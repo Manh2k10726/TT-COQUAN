@@ -14,7 +14,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { render } from '@testing-library/react';
 
 
-export default function CreateChiTietSuKien(props) {
+export default function CreateChiTietSuKien() {
     const [fileID, setFileID] = useState();
     const formik = useFormik({
         initialValues: {
@@ -96,34 +96,28 @@ export default function CreateChiTietSuKien(props) {
     };
     const [fileList, setFileList] = useState();
    
-    const handleChange = (info) => {
-      console.log('info',info)
-      let newFileList = [...info.fileList];
-      newFileList = newFileList.slice(-2);
-      newFileList = newFileList.map((file) => {
-        if (file.response) {
-          // Component will show file.url as link
-          file.fileID = file.response.file_id;
-          console.log('check fileId:',file.fileID)
-          setFileID(file.fileID)
-
-          file.url = file.response.url;
-        }
-        return file;
-      });
-      setFileList(newFileList);
-    };
-    const Props = {
-      action: 'https://stg.vimc.fafu.com.vn/api/v1/upload',
-      onChange: handleChange,
-      multiple: true,
-      headers:{
-          'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`},
-    };
+    const props = {
+        name: 'file',
+        action: 'https://stg.vimc.fafu.com.vn/api/v1/upload',
+        multiple: true,
+        headers:{
+                    'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`},
+        onChange(info) {
+          if (info.file.status !== 'uploading') {
+            console.log(info.file, info.fileList);
+          }
+          if (info.file.status === 'done') {
+            const listID = info.fileList?.map((item)=>item.response.file_id)
+            setFileID(listID)
+          } else if (info.file.status === 'error') {
+            // message.error(`${info.file.name} file upload failed.`);
+          }
+        },
+      };
         return (
             
             <form onSubmit={formik.handleSubmit}>
-                <div className='row create-container'>
+                <div className='row create-container' >
                     <div className='col-4 form-group'>
                         <label htmlFor="start_at"> Ngày thực hiện (*):</label>
                         <Space  direction="vertical">
@@ -206,8 +200,8 @@ export default function CreateChiTietSuKien(props) {
                     </div>
                     <div className='col-12 form-group'>
                         <label htmlFor="address">Tài liệu đính kèm :</label>
-                            <Upload {...Props} fileList={fileList}>
-                                <button className='btn btn-light' style={{alignItems:'center'}} ><AiOutlineUpload style={{fontSize:'20px'}}/> Chọn tài liệu đính kèm</button>
+                            <Upload {...props} fileList={fileList}>
+                                <button className='btn btn-light'  ><AiOutlineUpload style={{fontSize:'20px'}}/> Chọn tài liệu đính kèm</button>
                             </Upload>
                            
                     </div>
@@ -225,10 +219,11 @@ export default function CreateChiTietSuKien(props) {
                         <label htmlFor="assignees">Thông báo :</label>
                         <TreeSelect  {...tProps} />
                     </div>
-                </div>
-                <div className='button-create' >
+                    <div className='button-create' >
                     <button className='btn btn-primary' type='submit' >Thêm</button>
                 </div>
+                </div>
+               
          </form>
         )
 }

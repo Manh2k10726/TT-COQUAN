@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { history } from '../../../../App';
 import './CreateNew.css';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -15,14 +14,13 @@ import { getCurrentUser } from '../../../../Redux/Action/ManageUserAction';
 
 export default function CreateNews(){
     const {lstCurrentUser} = useSelector(state => state.ManageUserReducer);
-    console.log('check data current user :',lstCurrentUser)
+    // console.log('check data current user :',lstCurrentUser)
     const dispatch = useDispatch(); 
     useEffect(() => {
         dispatch(getCurrentUser())
     }, [])
 
     const [fileID, setFileID] = useState();
-    console.log('check data file id :',fileID)
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
@@ -86,7 +84,7 @@ export default function CreateNews(){
                     'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`},
         onChange(info) {
           if (info.file.status !== 'uploading') {
-            console.log(info.file, info.fileList);
+            console.log(info.fileList);
           }
           if (info.file.status === 'done') {
             const listID = info.fileList?.map((item)=>item.response.file_id)
@@ -99,8 +97,8 @@ export default function CreateNews(){
     return(
         <>
           <form onSubmit={formik.handleSubmit}>
-            <div className='Create-new' style={{margin:'0   300px 0  300px'}}>
-                <div className='row Create-new-container'>
+            <div className='Create-new' style={{margin:'10px   25px 0  25px',minHeight:'600px'}}>
+                <div className='row Create-new-container' style={{margin:'30px 300px 0 300px'}}>
                     <div className='col-12 form-group CrNew-content'>
                         <label>Tiêu đề(*):</label>
                         <input className='form-control' 
@@ -145,10 +143,10 @@ export default function CreateNews(){
                 <div>
                     <button className='btn btn-primary'
                                 // onClick={handleUpload}
-                                type='submit' style={{float:'right'}}>Đăng thông báo</button>
+                                type='submit' style={{float:'right',marginRight:'300px'}}>Đăng thông báo</button>
                 </div>
             </div>
-            </form>
+        </form>
         </>
     )
 }

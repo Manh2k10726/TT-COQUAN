@@ -11,6 +11,16 @@ export class baseService2 {
             data: model
         })
     }
+    patch = (url, model) => {
+        return Axios({
+            url: `${DOMAIN2}/${url}`,
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`},
+            method: 'PATCH',
+            data: model
+        })
+    }
+
     put = (url, model) => {
         return Axios({
             url: `${DOMAIN2}/${url}`,

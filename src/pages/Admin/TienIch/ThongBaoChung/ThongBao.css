@@ -1,5 +1,5 @@
 .TB{
-    background-color: rgb(205, 218, 244);
+    /* background-color: rgb(205, 218, 244); */
 }
 .ThongBao-container{
     display: flex;
@@ -43,4 +43,7 @@ img{
 }
 .text-file{
     font-weight: 600;
+}
+.ant-table-thead  tr th{
+    background-color: #2c65ac !important;
 }
