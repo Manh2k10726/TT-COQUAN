@@ -5,9 +5,16 @@
     display: flex;
     justify-content: space-around;
 }
+.row{
+    /* margin: 10px !important; */
+    /* padding: none !important; */
+}
+.col-6{
+    max-width: 49% !important;
+}
 .TB-content{
     height: auto;
-    margin: 5px;
+    margin-top: 10px;
     border-radius: 3px;
     background-color: rgb(255, 255, 255) !important;
 }

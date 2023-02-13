@@ -16,7 +16,7 @@ export default function ThongBaoChung(props){
     useEffect(() => {
         dispatch(getFileById(fileId))
     }, [])
-    const {lstNews} = useSelector(state=>state.ManageNewsReducer)
+    const {lstNews} = useSelector(state=>state.ManageUtilityReducer)
     const [ID,setID]=useState();
     function hanldOnchange(id){
         setID(id)
@@ -46,7 +46,7 @@ export default function ThongBaoChung(props){
     }
 
     
-    const {lstFileById} = useSelector(state=>state.ManageNewsReducer)
+    const {lstFileById} = useSelector(state=>state.ManageUtilityReducer)
     console.log('check file:',lstFileById)
       function handleMenuClick() {
         history.push(`/utility/general-notifications/view/${ID}`)
@@ -92,7 +92,7 @@ export default function ThongBaoChung(props){
        { lstNews&&lstNews.data?.map((item,index)=>{
             return(
                 <>
-                    <div className='col-5 TB-content'>
+                    <div className='col-6 TB-content'>
                         <div className='TB-header' key={index}>
                             <span>{item.subject}</span>
                             <Dropdown shape="circle" trigger={['click']} placement="bottomLeft"  overlay={menu}>

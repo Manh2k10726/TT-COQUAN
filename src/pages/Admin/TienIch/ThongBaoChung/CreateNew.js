@@ -4,7 +4,7 @@ import './CreateNew.css';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {  Button,Upload } from 'antd';
-import { ManageNewsReducer } from './../../../../Redux/Reducer/ManageUtilityReducer';
+import { ManageUtilityReducer } from './../../../../Redux/Reducer/ManageUtilityReducer';
 import {createNews} from '../../../../Redux/Action/ManageNewsAction'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';

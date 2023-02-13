@@ -12,6 +12,7 @@ import ThongBaoChung from './pages/Admin/TienIch/ThongBaoChung/ThongBao';
 import NewsDetail from './pages/Admin/TienIch/ThongBaoChung/NewsDetail';
 import CreateNews from './pages/Admin/TienIch/ThongBaoChung/CreateNew';
 import EditNews from './pages/Admin/TienIch/ThongBaoChung/EditNews';
+import DanhBa from './pages/Admin/TienIch/DanhBa/DanhBa';
 
 export const history = createBrowserHistory();
 export default function App() {
@@ -31,6 +32,7 @@ export default function App() {
         <AdminTemplate path={`/utility/general-notifications/view/:id`} exact Component={NewsDetail} />
         <AdminTemplate path={`/utility/general-notifications/create`} exact Component={CreateNews} />
         <AdminTemplate path={`/utility/general-notifications/update/:id`} exact Component={EditNews} />
+        <AdminTemplate path={`/utility/contacts`} exact Component={DanhBa} />
       </Switch>
     </Router>
   )

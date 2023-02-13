@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { TimePicker,TreeSelect,DatePicker, Space} from 'antd';
+import { TimePicker,TreeSelect,DatePicker, Space,FloatButton } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import './CreateLichCoQuan.css';
 import { useFormik } from 'formik';
@@ -220,7 +220,7 @@ export default function CreateChiTietSuKien() {
                         <TreeSelect  {...tProps} />
                     </div>
                     <div className='button-create' >
-                    <button className='btn btn-primary' type='submit' >Thêm</button>
+                    <button  className='btn btn-primary' type='submit' >Thêm</button>
                 </div>
                 </div>
                

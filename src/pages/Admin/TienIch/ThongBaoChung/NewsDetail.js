@@ -4,14 +4,14 @@ import { history } from '../../../../App';
 import { AiOutlineEye} from "react-icons/ai";
 import './NewDetail.css'
 import {getNewsByIdAction} from '../../../../Redux/Action/ManageNewsAction'
-import { ManageNewsReducer } from './../../../../Redux/Reducer/ManageUtilityReducer';
+import { ManageUtilityReducer } from './../../../../Redux/Reducer/ManageUtilityReducer';
 export default function NewsDetail(props){
     const dispatch = useDispatch(); 
     let {id}  = props.match.params;
     useEffect(()=>{
         dispatch(getNewsByIdAction(id))
     },[])
-    const {lstNewsById} = useSelector(state=>state.ManageNewsReducer)
+    const {lstNewsById} = useSelector(state=>state.ManageUtilityReducer)
     console.log('check data detail:',lstNewsById)
     var stringToHTML = function (str) {
         var dom = document.createElement('div');

@@ -8,12 +8,12 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { getCurrentUser } from '../../../../Redux/Action/ManageUserAction';
 import './EditNews.css'
-import { ManageNewsReducer } from './../../../../Redux/Reducer/ManageUtilityReducer';
+import { ManageUtilityReducer } from './../../../../Redux/Reducer/ManageUtilityReducer';
 import { EditNewsAction, getNewsByIdAction } from '../../../../Redux/Action/ManageNewsAction';
 
 export default function EditNews(props){
 
-    const {lstNewsById} = useSelector(state=>state.ManageNewsReducer)
+    const {lstNewsById} = useSelector(state=>state.ManageUtilityReducer)
     console.log('check data news by id:',lstNewsById)
     let {id}  = props.match.params;
     useEffect(() => {
